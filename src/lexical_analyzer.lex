@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
 #define num         1
 #define boollit     2
 #define ident       3
@@ -16,7 +15,7 @@
 #define IF          11
 #define THEN        12
 #define ELSE        13
-#define BEGIN_T     14
+#define BEGIN_T     14  // "BEGIN" is reserved by flex
 #define END         15
 #define WHILE       16
 #define DO          17
@@ -25,7 +24,7 @@
 #define AS          20
 #define INT         21
 #define BOOL        22
-#define WRITEINT   23
+#define WRITEINT    23
 #define READINT     24
 %}
 
@@ -43,7 +42,7 @@ false|true                    {return boollit;}
 "if"                          {return IF;}
 "then"                        {return THEN;}
 "else"                        {return ELSE;}
-"begin"                       {return BEGIN_T;}  // "BEGIN" is reserved by flex
+"begin"                       {return BEGIN_T;}  
 "end"                         {return END;}
 "while"                       {return WHILE;}
 "do"                          {return DO;}
@@ -54,7 +53,9 @@ false|true                    {return boollit;}
 "bool"                        {return BOOL;}
 "writeInt"                    {return WRITEINT;}
 "readInt"                     {return READINT;}
+[ \n\r]                       // ignore whitespace
 <<EOF>>                       {return 0;}
+.                             {return -1;}
 %%
 
 int main()
@@ -67,8 +68,11 @@ int main()
       case 0:
         printf("End of file\n");
         yyterminate();
+      case -1:
+        printf("Invalid input\n");
+        yyterminate();
       default:
-        printf("Token %s Text: %s\n", yylex(), yytext);
+        printf("Token: %d Text: %s\n", code, yytext);
     }
   }
 
