@@ -1,53 +1,60 @@
 %{
-  #include <stdio.h>
-  #include <string.h>
+#include <stdio.h>
+#include <string.h>
 
-#define TAGS              1
-#define BEGIN             2
-#define SEQUENCE          3
-#define INTEGER           4
-#define DATE              5
-#define END               6
-#define TYPE_REF          7
-#define IDENTIFIER        8
-#define NUMBER            9
-#define ASSIGN            10
-#define RANGE_SEPARATOR   11
-#define LCURLY            12
-#define RCURLY            13
-#define COMMA             14
-#define LPAREN            15
-#define RPAREN            16
-#define VERT_LINE         17
 
+#define num         1
+#define boollit     2
+#define ident       3
+#define LP          4
+#define RP          5
+#define ASGN        6
+#define SC          7
+#define OP2         8
+#define OP3         9
+#define OP4         10
+#define IF          11
+#define THEN        12
+#define ELSE        13
+#define BEGIN_T     14
+#define END         15
+#define WHILE       16
+#define DO          17
+#define PROGRAM     18
+#define VAR         19
+#define AS          20
+#define INT         21
+#define BOOL        22
+#define WRITEINT   23
+#define READINT     24
 %}
 
 %%
-
-"TAGS"                    {return(TAGS);}
-"BEGIN"                   {return(BEGIN);}
-"SEQUENCE"                {return(SEQUENCE);}
-"INTEGER"                 {return(INTEGER);}
-"DATE"                    {return(DATE);}
-"END"                     {return(END);}
-[A-Z][a-zA-Z0-9]*         {return(TYPE_REF);}
-[a-z][a-zA-Z0-9]*         {return(IDENTIFIER);}
-0|[1-9][0-9]*             {return(NUMBER);}
-"::="                     {return(ASSIGN);}
-".."                      {return(RANGE_SEPARATOR);}
-"{"                       {return(LCURLY);}
-"}"                       {return(RCURLY);}
-","                       {return(COMMA);}
-"("                       {return(LPAREN);}
-")"                       {return(RPAREN);}
-"|"                       {return VERT_LINE;}
-[ \t\n\r]                 //skip whitespace
-<<EOF>>                   {
-                            printf("End of file\n");
-                            yyterminate();
-                          }
-
-
+[1-9][0-9]*|0                 {return num;}
+false|true                    {return boollit;}
+[A-Z][A-Z0-9]*                {return ident;}
+"("                           {return LP;}
+")"                           {return RP;}
+":="                          {return ASGN;}
+";"                           {return SC;}
+"*"|"div"|"mod"               {return OP4;}
+"+"|"-"                       {return OP3;}
+"="|"!="|"<"|">"|"<="|">="    {return OP4;}
+"if"                          {return IF;}
+"then"                        {return THEN;}
+"else"                        {return ELSE;}
+"begin"                       {return BEGIN_T;}  // "BEGIN" is reserved by flex
+"end"                         {return END;}
+"while"                       {return WHILE;}
+"do"                          {return DO;}
+"program"                     {return PROGRAM;}
+"var"                         {return VAR;}
+"as"                          {return AS;}
+"int"                         {return INT;}
+"bool"                        {return BOOL;}
+"writeInt"                    {return WRITEINT;}
+"readInt"                     {return READINT;}
+<<EOF>>                       {return 0;}
 %%
 
 int main()
@@ -57,61 +64,11 @@ int main()
   while(1) {
     code = yylex();
     switch(code) {
-      case TAGS:
-        printf("Token: TAGS Text: %s\n", yytext);
-        break;
-      case BEGIN:
-        printf("Token: BEGIN Text: %s\n", yytext);
-        break;
-      case SEQUENCE:
-        printf("Token: SEQUENCE Text: %s\n", yytext);
-        break;
-      case INTEGER:
-        printf("Token: INTEGER Text: %s\n", yytext);
-        break;
-      case DATE:
-        printf("Token: DATE Text: %s\n", yytext);
-        break;
-      case END:
-        printf("Token: END Text: %s\n", yytext);
-        break;
-      case TYPE_REF:
-        printf("Token: TYPE_REF Text: %s\n", yytext);
-        break;
-      case IDENTIFIER:
-        printf("Token: IDENTIFIER Text: %s\n", yytext);
-        break;
-      case NUMBER:
-        printf("Token: NUMBER Text: %s\n", yytext);
-        break;
-      case ASSIGN:
-        printf("Token: ASSIGN Text: %s\n", yytext);
-        break;
-      case RANGE_SEPARATOR:
-        printf("Token: RANGE_SEPARATOR Text: %s\n", yytext);
-        break;
-      case LCURLY:
-        printf("Token: LCURLY Text: %s\n", yytext);
-        break;
-      case RCURLY:
-        printf("Token: RCURLY Text: %s\n", yytext);
-        break;
-      case COMMA:
-        printf("Token: COMMA Text: %s\n", yytext);
-        break;
-      case LPAREN:
-        printf("Token: LPAREN Text: %s\n", yytext);
-        break;
-      case RPAREN:
-        printf("Token: RPAREN Text:%s\n", yytext);
-        break;
-      case VERT_LINE:
-        printf("Token: VERT_LINE Text:%s\n", yytext);
-        break;
-      default:
-        printf("ERROR: Invalid code %s\n", yytext);
+      case 0:
+        printf("End of file\n");
         yyterminate();
-        break;
+      default:
+        printf("Token %s Text: %s\n", yylex(), yytext);
     }
   }
 
