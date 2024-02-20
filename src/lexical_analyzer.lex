@@ -58,6 +58,11 @@ false|true                    {return boollit;}
 .                             {return -1;}
 %%
 
+
+void print_token(char* token) {
+  printf("Token: %s Value: %s\n", token, yytext);
+}
+
 int main()
 {
   int code;
@@ -65,16 +70,91 @@ int main()
   while(1) {
     code = yylex();
     switch(code) {
-      case 0:
+      case 0:   // EOF
         printf("End of file\n");
         yyterminate();
-      case -1:
-        printf("Invalid input\n");
+        break;
+      case -1:  // ERROR
+        printf("ERROR: Invalid input: %s\n", yytext);
         yyterminate();
+        break;
+      case num:
+        print_token("num");
+        break;
+      case boollit:
+        print_token("boollit");
+        break;
+      case ident:
+        print_token("idnet");
+        break;
+      case LP:
+        print_token("LP");
+        break;
+      case RP:
+        print_token("RP");
+        break;
+      case ASGN:
+        print_token("ASGN");
+        break;
+      case SC:
+        print_token("SC");
+        break;
+      case OP2:
+        print_token("OP2");
+        break;
+      case OP3:
+        print_token("OP3");
+        break;
+      case OP4:
+        print_token("OP4");
+        break;
+      case IF:
+        print_token("IF");
+        break;
+      case THEN:
+        print_token("THEN");
+        break;
+      case ELSE:
+        print_token("ELSE");
+        break;
+      case BEGIN_T:
+        print_token("BEGIN");
+        break;
+      case END:
+        print_token("END");
+        break;
+      case WHILE:
+        print_token("WHILE");
+        break;
+      case DO:
+        print_token("DO");
+        break;
+      case PROGRAM:
+        print_token("PROGRAM");
+        break;
+      case VAR:
+        print_token("VAR");
+        break;
+      case AS:
+        print_token("AS");
+        break;
+      case INT:
+        print_token("INT");
+        break;
+      case BOOL:
+        print_token("BOOL");
       default:
-        printf("Token: %d Text: %s\n", code, yytext);
+        break;
+      case WRITEINT:
+        print_token("WRITEINT");
+        break;
+      case READINT:
+        print_token("READINT");
+        break;
+      defualt:
+        printf("ERROR: Invalid token: %s of with value: %s\n", code, yytext);
+        break;
     }
   }
-
   return 0;
 }
