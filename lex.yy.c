@@ -493,10 +493,9 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "lexical_analyzer.lex"
-#line 2 "lexical_analyzer.lex"
+#line 1 "src/lexical_analyzer.l"
+#line 2 "src/lexical_analyzer.l"
 #include <stdio.h>
-#include <string.h>
 
 #define num         1
 #define boollit     2
@@ -522,8 +521,8 @@ char *yytext;
 #define BOOL        22
 #define WRITEINT    23
 #define READINT     24
+#line 524 "lex.yy.c"
 #line 525 "lex.yy.c"
-#line 526 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -740,9 +739,9 @@ YY_DECL
 		}
 
 	{
-#line 31 "lexical_analyzer.lex"
+#line 30 "src/lexical_analyzer.l"
 
-#line 745 "lex.yy.c"
+#line 744 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -801,145 +800,145 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 32 "lexical_analyzer.lex"
+#line 31 "src/lexical_analyzer.l"
 {return num;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 33 "lexical_analyzer.lex"
+#line 32 "src/lexical_analyzer.l"
 {return boollit;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 34 "lexical_analyzer.lex"
+#line 33 "src/lexical_analyzer.l"
 {return ident;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 35 "lexical_analyzer.lex"
+#line 34 "src/lexical_analyzer.l"
 {return LP;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 36 "lexical_analyzer.lex"
+#line 35 "src/lexical_analyzer.l"
 {return RP;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 37 "lexical_analyzer.lex"
+#line 36 "src/lexical_analyzer.l"
 {return ASGN;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 38 "lexical_analyzer.lex"
+#line 37 "src/lexical_analyzer.l"
 {return SC;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 39 "lexical_analyzer.lex"
-{return OP4;}
+#line 38 "src/lexical_analyzer.l"
+{return OP2;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 40 "lexical_analyzer.lex"
+#line 39 "src/lexical_analyzer.l"
 {return OP3;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 41 "lexical_analyzer.lex"
+#line 40 "src/lexical_analyzer.l"
 {return OP4;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 42 "lexical_analyzer.lex"
+#line 41 "src/lexical_analyzer.l"
 {return IF;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 43 "lexical_analyzer.lex"
+#line 42 "src/lexical_analyzer.l"
 {return THEN;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 44 "lexical_analyzer.lex"
+#line 43 "src/lexical_analyzer.l"
 {return ELSE;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 45 "lexical_analyzer.lex"
+#line 44 "src/lexical_analyzer.l"
 {return BEGIN_T;}  
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 46 "lexical_analyzer.lex"
+#line 45 "src/lexical_analyzer.l"
 {return END;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 47 "lexical_analyzer.lex"
+#line 46 "src/lexical_analyzer.l"
 {return WHILE;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 48 "lexical_analyzer.lex"
+#line 47 "src/lexical_analyzer.l"
 {return DO;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 49 "lexical_analyzer.lex"
+#line 48 "src/lexical_analyzer.l"
 {return PROGRAM;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 50 "lexical_analyzer.lex"
+#line 49 "src/lexical_analyzer.l"
 {return VAR;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 51 "lexical_analyzer.lex"
+#line 50 "src/lexical_analyzer.l"
 {return AS;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 52 "lexical_analyzer.lex"
+#line 51 "src/lexical_analyzer.l"
 {return INT;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 53 "lexical_analyzer.lex"
+#line 52 "src/lexical_analyzer.l"
 {return BOOL;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 54 "lexical_analyzer.lex"
+#line 53 "src/lexical_analyzer.l"
 {return WRITEINT;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 55 "lexical_analyzer.lex"
+#line 54 "src/lexical_analyzer.l"
 {return READINT;}
 	YY_BREAK
 case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
-#line 56 "lexical_analyzer.lex"
+#line 55 "src/lexical_analyzer.l"
 // ignore whitespace
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 57 "lexical_analyzer.lex"
+#line 56 "src/lexical_analyzer.l"
 {return 0;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 58 "lexical_analyzer.lex"
+#line 57 "src/lexical_analyzer.l"
 {return -1;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 59 "lexical_analyzer.lex"
+#line 58 "src/lexical_analyzer.l"
 ECHO;
 	YY_BREAK
-#line 942 "lex.yy.c"
+#line 941 "lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1942,105 +1941,114 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 59 "lexical_analyzer.lex"
+#line 58 "src/lexical_analyzer.l"
 
 
+// converts token type int representation to string
+char *token_string(int type) {
+  switch(type) {
+    case num:
+      return "num";
+      break;
+    case boollit:
+      return "boollit";
+      break;
+    case ident:
+      return "ident";
+      break;
+    case LP:
+      return "LP";
+      break;
+    case RP:
+      return "RP";
+      break;
+    case ASGN:
+      return "ASGN";
+      break;
+    case SC:
+      return "SC";
+      break;
+    case OP2:
+      return "OP2";
+      break;
+    case OP3:
+      return "OP3";
+      break;
+    case OP4:
+      return "OP4";
+      break;
+    case IF:
+      return "IF";
+      break;
+    case THEN:
+      return "THEN";
+      break;
+    case ELSE:
+      return "ELSE";
+      break;
+    case BEGIN_T: // BEGIN is reserved by flex
+      return "BEGIN";
+      break;
+    case END:
+      return "END";
+      break;
+    case WHILE:
+      return "WHILE";
+      break;
+    case DO:
+      return "DO";
+      break;
+    case PROGRAM:
+      return "PROGRAM";
+      break;
+    case VAR:
+      return "VAR";
+      break;
+    case AS:
+      return "AS";
+      break;
+    case INT:
+      return "INT";
+      break;
+    case BOOL:
+      return "BOOL";
+      break;
+    case WRITEINT:
+      return "WRITEINT";
+      break;
+    case READINT:
+      return "READINT";
+      break;
+    default: // if type > 24, program should never reach this point
+      printf("ERROR: Invalid token type, %d\n", type);
+      exit(1);
+    }
+}
 
-void print_token(char* token) {
-  printf("Token: %s Value: %s\n", token, yytext);
+// function to print token type and value
+void print_token(char *type) {
+  printf("Token: %s Value: %s\n", type, yytext);
 }
 
 int main()
 {
   int code;
 
+  // reads and prints token type and value until error or eof reached
   while(1) {
     code = yylex();
     switch(code) {
       case 0:   // EOF
-        printf("End of file\n");
+        //printf("End of file\n");
         yyterminate();
         break;
-      case -1:  // ERROR
+      case -1:  // ERROR: Invlid Input
         printf("ERROR: Invalid input: %s\n", yytext);
         yyterminate();
         break;
-      case num:
-        print_token("num");
-        break;
-      case boollit:
-        print_token("boollit");
-        break;
-      case ident:
-        print_token("idnet");
-        break;
-      case LP:
-        print_token("LP");
-        break;
-      case RP:
-        print_token("RP");
-        break;
-      case ASGN:
-        print_token("ASGN");
-        break;
-      case SC:
-        print_token("SC");
-        break;
-      case OP2:
-        print_token("OP2");
-        break;
-      case OP3:
-        print_token("OP3");
-        break;
-      case OP4:
-        print_token("OP4");
-        break;
-      case IF:
-        print_token("IF");
-        break;
-      case THEN:
-        print_token("THEN");
-        break;
-      case ELSE:
-        print_token("ELSE");
-        break;
-      case BEGIN_T:
-        print_token("BEGIN");
-        break;
-      case END:
-        print_token("END");
-        break;
-      case WHILE:
-        print_token("WHILE");
-        break;
-      case DO:
-        print_token("DO");
-        break;
-      case PROGRAM:
-        print_token("PROGRAM");
-        break;
-      case VAR:
-        print_token("VAR");
-        break;
-      case AS:
-        print_token("AS");
-        break;
-      case INT:
-        print_token("INT");
-        break;
-      case BOOL:
-        print_token("BOOL");
       default:
-        break;
-      case WRITEINT:
-        print_token("WRITEINT");
-        break;
-      case READINT:
-        print_token("READINT");
-        break;
-      defualt:
-        printf("ERROR: Invalid token: %s of with value: %s\n", code, yytext);
-        break;
+        printf("Token: %s Value: %s\n", token_string(code), yytext);
+        break;  
     }
   }
   return 0;

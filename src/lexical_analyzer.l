@@ -1,6 +1,5 @@
 %{
 #include <stdio.h>
-#include <string.h>
 
 #define num         1
 #define boollit     2
@@ -36,7 +35,7 @@ false|true                    {return boollit;}
 ")"                           {return RP;}
 ":="                          {return ASGN;}
 ";"                           {return SC;}
-"*"|"div"|"mod"               {return OP4;}
+"*"|"div"|"mod"               {return OP2;}
 "+"|"-"                       {return OP3;}
 "="|"!="|"<"|">"|"<="|">="    {return OP4;}
 "if"                          {return IF;}
@@ -58,102 +57,111 @@ false|true                    {return boollit;}
 .                             {return -1;}
 %%
 
+// converts token type int representation to string
+char *token_string(int type) {
+  switch(type) {
+    case num:
+      return "num";
+      break;
+    case boollit:
+      return "boollit";
+      break;
+    case ident:
+      return "ident";
+      break;
+    case LP:
+      return "LP";
+      break;
+    case RP:
+      return "RP";
+      break;
+    case ASGN:
+      return "ASGN";
+      break;
+    case SC:
+      return "SC";
+      break;
+    case OP2:
+      return "OP2";
+      break;
+    case OP3:
+      return "OP3";
+      break;
+    case OP4:
+      return "OP4";
+      break;
+    case IF:
+      return "IF";
+      break;
+    case THEN:
+      return "THEN";
+      break;
+    case ELSE:
+      return "ELSE";
+      break;
+    case BEGIN_T: // BEGIN is reserved by flex
+      return "BEGIN";
+      break;
+    case END:
+      return "END";
+      break;
+    case WHILE:
+      return "WHILE";
+      break;
+    case DO:
+      return "DO";
+      break;
+    case PROGRAM:
+      return "PROGRAM";
+      break;
+    case VAR:
+      return "VAR";
+      break;
+    case AS:
+      return "AS";
+      break;
+    case INT:
+      return "INT";
+      break;
+    case BOOL:
+      return "BOOL";
+      break;
+    case WRITEINT:
+      return "WRITEINT";
+      break;
+    case READINT:
+      return "READINT";
+      break;
+    default: // if type > 24, program should never reach this point
+      printf("ERROR: Invalid token type, %d\n", type);
+      exit(1);
+    }
+}
 
-void print_token(char* token) {
-  printf("Token: %s Value: %s\n", token, yytext);
+// function to print token type and value
+void print_token(char *type) {
+  printf("Token: %s Value: %s\n", type, yytext);
 }
 
 int main()
 {
   int code;
 
+  // reads and prints token type and value until error or eof reached
   while(1) {
     code = yylex();
     switch(code) {
       case 0:   // EOF
-        printf("End of file\n");
+        //printf("End of file\n");
         yyterminate();
         break;
-      case -1:  // ERROR
+      case -1:  // ERROR: Invlid Input
         printf("ERROR: Invalid input: %s\n", yytext);
         yyterminate();
         break;
-      case num:
-        print_token("num");
-        break;
-      case boollit:
-        print_token("boollit");
-        break;
-      case ident:
-        print_token("idnet");
-        break;
-      case LP:
-        print_token("LP");
-        break;
-      case RP:
-        print_token("RP");
-        break;
-      case ASGN:
-        print_token("ASGN");
-        break;
-      case SC:
-        print_token("SC");
-        break;
-      case OP2:
-        print_token("OP2");
-        break;
-      case OP3:
-        print_token("OP3");
-        break;
-      case OP4:
-        print_token("OP4");
-        break;
-      case IF:
-        print_token("IF");
-        break;
-      case THEN:
-        print_token("THEN");
-        break;
-      case ELSE:
-        print_token("ELSE");
-        break;
-      case BEGIN_T:
-        print_token("BEGIN");
-        break;
-      case END:
-        print_token("END");
-        break;
-      case WHILE:
-        print_token("WHILE");
-        break;
-      case DO:
-        print_token("DO");
-        break;
-      case PROGRAM:
-        print_token("PROGRAM");
-        break;
-      case VAR:
-        print_token("VAR");
-        break;
-      case AS:
-        print_token("AS");
-        break;
-      case INT:
-        print_token("INT");
-        break;
-      case BOOL:
-        print_token("BOOL");
       default:
-        break;
-      case WRITEINT:
-        print_token("WRITEINT");
-        break;
-      case READINT:
-        print_token("READINT");
-        break;
-      defualt:
-        printf("ERROR: Invalid token: %s of with value: %s\n", code, yytext);
-        break;
+        printf("Token: %s Value: %s\n", token_string(code), yytext);
+        break;  
     }
   }
   return 0;
