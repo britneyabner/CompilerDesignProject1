@@ -2032,6 +2032,9 @@ void print_token(char *type) {
 
 int main()
 {
+  FILE *fptr;
+  fptr = fopen("output.txt", "w");
+
   int code;
 
   // reads and prints token type and value until error or eof reached
@@ -2048,9 +2051,11 @@ int main()
         break;
       default:
         printf("Token: %s Value: %s\n", token_string(code), yytext);
+        fprintf(fptr, "Token: %s Value: %s\n", token_string(code), yytext);
         break;  
     }
   }
+  fclose(fptr);
   return 0;
 }
 
