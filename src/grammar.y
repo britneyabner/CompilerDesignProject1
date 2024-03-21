@@ -1,32 +1,7 @@
 %{
-    #include <stdio.h>
-
-    typedef enum token {
-    NUM,
-    BOOLLIT,
-    IDENT,
-    LP,
-    RP,
-    ASGN,
-    SC,
-    OP2,
-    OP3,
-    OP4,
-    IF,
-    THEN,
-    ELSE,
-    _BEGIN, // BEGIN is resereved by Flex and Bison
-    END,
-    WHILE,
-    DO,
-    PROGRAM,
-    VAR,
-    AS,
-    INT,
-    BOOL,
-    WRITEINT,
-    READINT,
-} token_t;
+#include <stdio.h>
+int yylex();
+int yyerror(char *);
 %}
 
 %token NUM
@@ -37,7 +12,6 @@
 %token ASGN
 %token SC
 %token OP2
-%token OP3
 %token OP3
 %token OP4
 %token IF
@@ -65,7 +39,7 @@ program:
 
 declarations: 
     VAR IDENT AS type SC declarations
-    | %empty
+    | /* empty */
     ;
 
 type:
@@ -75,7 +49,7 @@ type:
 
 statement_sequence:
     statement SC statement_sequence
-    | %empty
+    | /* empty */
     ;
 
 statement:
@@ -88,6 +62,7 @@ statement:
 assignment:
     IDENT ASGN simple_expression
     | IDENT ASGN READINT
+    ;
 
 if_statement:
     IF expression THEN statement_sequence else_clause END
@@ -95,7 +70,7 @@ if_statement:
 
 else_clause:
     ELSE statement_sequence
-    | %empty
+    | /* empty */
     ;
 
 while_statement:
@@ -109,14 +84,37 @@ write_int:
 expression:
     simple_expression
     | simple_expression OP4 simple_expression
+    ;
 
 simple_expression:
     term OP3 term
     | term
+    ;
 
 term:
     factor OP2 factor
     | factor
+    ;
 
 factor:
-    IDENT NUM BOOLLIT LP expression RP
+    IDENT
+    | NUM
+    | BOOLLIT
+    | LP expression RP
+    ;
+%%
+
+
+int yyerror(char *s) {
+    printf("yyerror : %s\n", s);
+}
+
+int main() {
+    yyparse();
+    printf("SUCCESS\n");
+    return 0;
+}
+
+int yywrap() {
+
+}
