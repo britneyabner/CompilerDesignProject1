@@ -18,9 +18,9 @@ and ```test_error.txt```.
 <br/>
 To test for success, run:  
 ``` bash
-./compiler < test/test_success.txt
+./bin/compiler < test/test_success.txt
 ```
 To test for error, run:  
 ``` bash
-./compiler < test/test_error.txt
+./bin/compiler < test/test_error.txt
 ```
