@@ -1,3 +1,5 @@
+% Tests compiler for success
+
 program
    var SMALLER as int ;
    var BIGGER as int ;

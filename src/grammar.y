@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+#include <stdlib.h>
 int yylex();
 int yyerror(char *);
 %}
@@ -107,6 +108,7 @@ factor:
 
 int yyerror(char *s) {
     printf("yyerror : %s\n", s);
+    exit(1);
 }
 
 int main() {

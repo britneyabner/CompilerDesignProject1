@@ -29,4 +29,5 @@ false|true                    return(BOOLLIT);
 "writeInt"                    return(WRITEINT);
 "readInt"                     return(READINT);
 [ \n\r]                       // ignore whitespace
+"%".*\n                       // ignore comment
 %%
