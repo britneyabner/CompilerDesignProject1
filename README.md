@@ -1,23 +1,26 @@
-# Lexical Analyzer
-Lexical Analyzer for the TL13 programming language. Written for Compiler Design course project 1a.
+# TL13 Compiler
+Compiler for the TL13 programming language. In development for Compiler Design
+course.
 
-Lexical Analyzer uses flex to generate a C file that reads TL13 code and prints the token and value pairs of the code.
+The program makes use of Flex and Bison to implement lexical analysis and 
+context-free grammar.
 
 Written by: Britney Abner
 
 ## Make
-The project is already made. To make again using the provided makefile, run the following:
-```bash
-make
-```
-
-To make without the makefile, use:
-```
-flex src/lexical_analyzer.l
-gcc lex.yy.c -lfl -o a.out
-```
+The project is already compiled. The program located at ```bin/compiler```.  
+<br/>
+A Makefile is provided. To make, run ```make``` within the project directory
 
 ## Testing
-The file ```test.txt``` is provided for testing. To test, run the following:
-```bash
-./a.out < test.txt
+The ```test``` directory provided 2 files for testing: ```test_success.txt```
+and ```test_error.txt```.  
+<br/>
+To test for success, run:  
+``` bash
+./compiler < test/test_success.txt
+```
+To test for error, run:  
+``` bash
+./compiler < test/test_error.txt
+```
