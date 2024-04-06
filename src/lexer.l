@@ -1,19 +1,43 @@
 %{
-#include "grammar.tab.h"
-
+#include "parser.tab.h"
 %}
 
 %%
-[1-9][0-9]*|0                 return(NUM);
-false|true                    return(BOOLLIT);
-[A-Z][A-Z0-9]*                return(IDENT);
+[1-9][0-9]*|0   {
+    yylval.ival = atoi(yytext);
+    return NUM;
+}
+
+false|true {
+    yylval.sval = strdup(yytext);
+    return BOOLLIT;
+}
+
+[A-Z][A-Z0-9]* {
+        yylval.sval = strdup(yytext);
+        return IDENT;
+}
+
 "("                           return(LP);
 ")"                           return(RP);
 ":="                          return(ASGN);
 ";"                           return(SC);
-"*"|"div"|"mod"               return(OP2);
-"+"|"-"                       return(OP3);
-"="|"!="|"<"|">"|"<="|">="    return(OP4);
+
+"*"|"div"|"mod" {
+    yylval.sval = strdup(yytext);
+    return OP2;
+}
+
+"+"|"-" {
+    yylval.sval = strdup(yytext);
+    return OP3;
+}
+
+"="|"!="|"<"|">"|"<="|">="  {
+    yylval.sval = strdup(yytext);
+    return OP4;
+}
+
 "if"                          return(IF);
 "then"                        return(THEN);
 "else"                        return(ELSE);

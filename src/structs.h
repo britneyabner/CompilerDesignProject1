@@ -21,11 +21,15 @@ struct program {
   statement_sequence_t *statement_sequence_ptr;
 };
 
+// program_t *init_program(declarations_t *d, statement_sequence_t *s);
+
 struct declarations {
   char *ident;
-  type_t *type_struct;
+  type_t *type_ptr;
   declarations_t *declarations_ptr;
 };
+
+// declarations_t *init_declarations(char *id, type_t *t, declarations_t *d);
 
 struct type {};
 
@@ -66,21 +70,28 @@ struct write_int {
 };
 
 struct expression {
-  simple_expression_t *simple_expression_ptr;
-  char *op4; // OP4 can be one or multiple characters
+  simple_expression_t *simple_expression_one_ptr;
+  char *op4;
+  simple_expression_t *simple_expression_two_ptr;
 };
 
 struct simple_expression {
-  term_t *term_ptr;
-  char op3; // OP3 is only ever one character
+  term_t *term_one_ptr;
+  char *op3;
+  term_t *term_two_ptr;
 };
 
 struct term {
-  factor_t *factor_ptr;
-  int num;
-  char *boollit; // BOOLLIT can either be "true" or "false", while it  may be
-                 // a bool, the lexeme will be represented as a string.
-  expression_t expression_ptr;
+  factor_t *factor_one_ptr;
+  char *op2;
+  factor_t *factor_two_ptr;
 };
 
-#endif // STUCTS_H
+struct factor {
+  char *ident;
+  int num;
+  char *boollit; // can only be "true" or "false"
+  expression_t *expression_ptr;
+};
+
+#endif // STRUCTS_H

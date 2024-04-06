@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_SRC_GRAMMAR_TAB_H_INCLUDED
-# define YY_YY_SRC_GRAMMAR_TAB_H_INCLUDED
+#ifndef YY_YY_SRC_PARSER_TAB_H_INCLUDED
+# define YY_YY_SRC_PARSER_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -44,6 +44,12 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 11 "src/parser.y"
+
+    #include "structs.h"
+
+#line 53 "src/parser.tab.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -84,7 +90,31 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 16 "src/parser.y"
+
+    char *sval;
+    int ival;
+    program_t *program_val;
+    declarations_t *declarations_val;
+    type_t  *type_val;
+    statement_sequence_t *statement_sequence_val;
+    statement_t *statement_val;
+    assignment_t *assigment_val;
+    if_statement_t *if_statement_val;
+    else_clause_t *else_clause_val;
+    while_statement_t *while_statement_val;
+    write_int_t *write_int_val;
+    expression_t *expression_val;
+    simple_expression_t *simple_expression_val;
+    term_t *term_val;
+    factor_t *factor_val;
+
+#line 115 "src/parser.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -96,4 +126,4 @@ extern YYSTYPE yylval;
 int yyparse (void);
 
 
-#endif /* !YY_YY_SRC_GRAMMAR_TAB_H_INCLUDED  */
+#endif /* !YY_YY_SRC_PARSER_TAB_H_INCLUDED  */

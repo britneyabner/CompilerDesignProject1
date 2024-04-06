@@ -67,14 +67,16 @@
 
 
 /* First part of user prologue.  */
-#line 1 "src/grammar.y"
+#line 1 "src/parser.y"
 
 #include <stdio.h>
 #include <stdlib.h>
-int yylex();
-int yyerror(char *);
+#include <string.h>
 
-#line 78 "src/grammar.tab.c"
+int yylex(void);
+int yyerror(const char *);
+
+#line 80 "src/parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -97,7 +99,7 @@ int yyerror(char *);
 #  endif
 # endif
 
-#include "grammar.tab.h"
+#include "parser.tab.h"
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -471,7 +473,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   49
+#define YYLAST   46
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  27
@@ -530,11 +532,11 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int8 yyrline[] =
+static const yytype_int16 yyrline[] =
 {
-       0,    38,    38,    42,    43,    47,    48,    52,    53,    57,
-      58,    59,    60,    64,    65,    69,    73,    74,    78,    82,
-      86,    87,    91,    92,    96,    97,   101,   102,   103,   104
+       0,    80,    80,   110,   111,   121,   125,   132,   133,   142,
+     147,   152,   157,   165,   171,   179,   189,   190,   198,   207,
+     215,   220,   230,   237,   245,   252,   260,   265,   270,   275
 };
 #endif
 
@@ -580,12 +582,12 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -12,    -8,    15,    11,     3,   -26,     0,    -1,   -13,    13,
-      25,    25,    25,     9,    23,   -26,   -26,   -26,   -26,   -26,
-     -26,    24,    -3,   -26,   -26,   -26,    25,    20,    26,    28,
-      27,    16,   -26,   -26,    -1,    -8,   -26,   -26,    29,    -1,
-      25,    25,    25,    -1,   -26,   -26,   -26,    30,   -26,   -26,
-     -26,    31,    -1,    32,   -26,   -26,   -26
+     -10,    -8,    11,    10,     3,   -26,     0,    -1,   -16,    13,
+      25,    25,    25,     8,    17,   -26,   -26,   -26,   -26,   -26,
+     -26,    23,    -3,   -26,   -26,   -26,    25,    19,    22,    24,
+      26,    18,   -26,   -26,    -1,    -8,   -26,   -26,    31,    -1,
+      25,    25,    25,    -1,   -26,   -26,   -26,    27,   -26,   -26,
+     -26,    28,    -1,    29,   -26,   -26,   -26
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -593,19 +595,19 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     4,     0,     0,     0,     1,     0,     8,     0,     0,
+       0,     3,     0,     0,     0,     1,     0,     7,     0,     0,
        0,     0,     0,     0,     0,     9,    10,    11,    12,     5,
        6,     0,     0,    27,    28,    26,     0,     0,    20,    23,
-      25,     0,    19,     2,     8,     4,    14,    13,     0,     8,
-       0,     0,     0,     8,     7,     3,    29,    17,    21,    22,
-      24,     0,     8,     0,    18,    16,    15
+      25,     0,    19,     2,     7,     3,    14,    13,     0,     7,
+       0,     0,     0,     7,     8,     4,    29,    16,    21,    22,
+      24,     0,     7,     0,    18,    17,    15
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -26,   -26,     5,   -26,   -25,   -26,   -26,   -26,   -26,   -26,
-     -26,    -6,   -15,     1,     2
+     -26,   -26,     4,   -26,   -25,   -26,   -26,   -26,   -26,   -26,
+     -26,    -6,     1,     2,    -2
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -620,20 +622,20 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      23,    24,    25,    26,     9,    31,    32,    37,     1,    44,
-      19,    20,    10,     3,    47,     5,     6,    11,    51,     7,
-      38,    22,     8,    36,    12,    48,    33,    55,    23,    24,
-      25,    26,    34,    35,    39,    43,    46,    42,    40,    41,
-      45,     0,    49,     0,    50,    52,     0,     0,    54,    56
+      23,    24,    25,    26,     9,    31,    32,    19,    20,    44,
+       1,     5,    10,     3,    47,     6,    37,    11,    51,     7,
+      38,    22,     8,    36,    12,    33,    34,    55,    23,    24,
+      25,    26,    35,    39,    40,    41,    42,    43,    46,    45,
+      50,    48,    52,    49,     0,    54,    56
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     4,     5,     6,     5,    11,    12,    22,    20,    34,
-      23,    24,    13,    21,    39,     0,     5,    18,    43,    16,
-      26,     8,    22,    26,    25,    40,    17,    52,     3,     4,
-       5,     6,     9,     9,    14,    19,     7,    10,    12,    11,
-      35,    -1,    41,    -1,    42,    15,    -1,    -1,    17,    17
+       3,     4,     5,     6,     5,    11,    12,    23,    24,    34,
+      20,     0,    13,    21,    39,     5,    22,    18,    43,    16,
+      26,     8,    22,    26,    25,    17,     9,    52,     3,     4,
+       5,     6,     9,    14,    12,    11,    10,    19,     7,    35,
+      42,    40,    15,    41,    -1,    17,    17
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -643,7 +645,7 @@ static const yytype_int8 yystos[] =
        0,    20,    28,    21,    29,     0,     5,    16,    22,     5,
       13,    18,    25,    31,    32,    33,    34,    36,    37,    23,
       24,    30,     8,     3,     4,     5,     6,    38,    39,    40,
-      41,    38,    38,    17,     9,     9,    26,    39,    38,    14,
+      41,    38,    38,    17,     9,     9,    26,    38,    38,    14,
       12,    11,    10,    19,    31,    29,     7,    31,    39,    40,
       41,    31,    15,    35,    17,    31,    17
 };
@@ -659,8 +661,8 @@ static const yytype_int8 yyr1[] =
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     5,     6,     0,     1,     1,     3,     0,     1,
-       1,     1,     1,     3,     3,     6,     2,     0,     5,     2,
+       0,     2,     5,     0,     6,     1,     1,     0,     3,     1,
+       1,     1,     1,     3,     3,     6,     0,     2,     5,     2,
        1,     3,     3,     1,     3,     1,     1,     1,     1,     3
 };
 
@@ -1124,8 +1126,284 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 2: /* program: PROGRAM declarations BEGIN_T statement_sequence END  */
+#line 81 "src/parser.y"
+        {
+            (yyval.program_val) = malloc(sizeof(program_t));
+            (yyval.program_val)->declarations_ptr = (yyvsp[-3].declarations_val);
+            (yyval.program_val)->statement_sequence_ptr = (yyvsp[-1].statement_sequence_val);
+            printf("program\n");
+            declarations_t *dec = (yyval.program_val)->declarations_ptr;
+            while(dec != NULL) {
+                printf("\tvar %s as INT ;\n", dec->ident);
+                dec = dec->declarations_ptr;
+            }
+            printf("begin\n");
+            statement_sequence_t *sq = (yyval.program_val)->statement_sequence_ptr;
+            while(sq != NULL) {
+                statement_t *s = sq->statement_ptr;
+                assignment_t *a = s->assignment_ptr;
+                if (a != NULL) {
+                    printf("\t%s := \n", a->ident);
+                }
+                if_statement_t *i = s->if_statement_ptr;
+                if (i != NULL) { 
+                    printf("\tif\n");
+                }
+                sq = sq->statement_sequence_ptr;
 
-#line 1129 "src/grammar.tab.c"
+            }
+        }
+#line 1158 "src/parser.tab.c"
+    break;
+
+  case 3: /* declarations: %empty  */
+#line 110 "src/parser.y"
+                { (yyval.declarations_val) = malloc(sizeof(declarations_t)); }
+#line 1164 "src/parser.tab.c"
+    break;
+
+  case 4: /* declarations: VAR IDENT AS type SC declarations  */
+#line 112 "src/parser.y"
+        {
+            (yyval.declarations_val) = malloc(sizeof(declarations_t));
+            (yyval.declarations_val)->ident = (yyvsp[-4].sval);
+            (yyval.declarations_val)->type_ptr = (yyvsp[-2].type_val);
+            (yyval.declarations_val)->declarations_ptr = (yyvsp[0].declarations_val);
+        }
+#line 1175 "src/parser.tab.c"
+    break;
+
+  case 5: /* type: INT  */
+#line 122 "src/parser.y"
+        {
+            (yyval.type_val) = malloc(sizeof(type_t));
+        }
+#line 1183 "src/parser.tab.c"
+    break;
+
+  case 6: /* type: BOOL  */
+#line 126 "src/parser.y"
+        {
+            (yyval.type_val) = malloc(sizeof(type_t));
+        }
+#line 1191 "src/parser.tab.c"
+    break;
+
+  case 7: /* statement_sequence: %empty  */
+#line 132 "src/parser.y"
+                { malloc(sizeof(statement_sequence_t)); }
+#line 1197 "src/parser.tab.c"
+    break;
+
+  case 8: /* statement_sequence: statement SC statement_sequence  */
+#line 134 "src/parser.y"
+        {
+            (yyval.statement_sequence_val) = malloc(sizeof(statement_sequence_t));
+            (yyval.statement_sequence_val)->statement_ptr = (yyvsp[-2].statement_val);
+            (yyval.statement_sequence_val)->statement_sequence_ptr = (yyvsp[0].statement_sequence_val);
+        }
+#line 1207 "src/parser.tab.c"
+    break;
+
+  case 9: /* statement: assignment  */
+#line 143 "src/parser.y"
+        {
+            (yyval.statement_val) = malloc(sizeof(statement_t));
+            (yyval.statement_val)->assignment_ptr = (yyvsp[0].assigment_val);
+        }
+#line 1216 "src/parser.tab.c"
+    break;
+
+  case 10: /* statement: if_statement  */
+#line 148 "src/parser.y"
+        {
+            (yyval.statement_val) = malloc(sizeof(statement_t));
+            (yyval.statement_val)->if_statement_ptr = (yyvsp[0].if_statement_val);
+        }
+#line 1225 "src/parser.tab.c"
+    break;
+
+  case 11: /* statement: while_statement  */
+#line 153 "src/parser.y"
+        {
+            (yyval.statement_val) = malloc(sizeof(statement_t));
+            (yyval.statement_val)->while_statement_ptr = (yyvsp[0].while_statement_val);
+        }
+#line 1234 "src/parser.tab.c"
+    break;
+
+  case 12: /* statement: write_int  */
+#line 158 "src/parser.y"
+        {
+            (yyval.statement_val) = malloc(sizeof(statement_t));
+            (yyval.statement_val)->write_int_ptr = (yyvsp[0].write_int_val);
+        }
+#line 1243 "src/parser.tab.c"
+    break;
+
+  case 13: /* assignment: IDENT ASGN expression  */
+#line 166 "src/parser.y"
+        {
+            (yyval.assigment_val) = malloc(sizeof(assignment_t));
+            (yyval.assigment_val)->ident = (yyvsp[-2].sval);
+            (yyval.assigment_val)->expression_ptr = (yyvsp[0].expression_val);
+        }
+#line 1253 "src/parser.tab.c"
+    break;
+
+  case 14: /* assignment: IDENT ASGN READINT  */
+#line 172 "src/parser.y"
+        {
+            (yyval.assigment_val) = malloc(sizeof(assignment_t));
+            (yyval.assigment_val)->ident = (yyvsp[-2].sval);
+        }
+#line 1262 "src/parser.tab.c"
+    break;
+
+  case 15: /* if_statement: IF expression THEN statement_sequence else_clause END  */
+#line 180 "src/parser.y"
+        {
+            (yyval.if_statement_val) = malloc(sizeof(if_statement_t));
+            (yyval.if_statement_val)->expression_ptr = (yyvsp[-4].expression_val);
+            (yyval.if_statement_val)->statement_sequence_ptr = (yyvsp[-2].statement_sequence_val);
+            (yyval.if_statement_val)->else_clause_ptr = (yyvsp[-1].else_clause_val);
+        }
+#line 1273 "src/parser.tab.c"
+    break;
+
+  case 16: /* else_clause: %empty  */
+#line 189 "src/parser.y"
+                { (yyval.else_clause_val) = malloc(sizeof(else_clause_t)); }
+#line 1279 "src/parser.tab.c"
+    break;
+
+  case 17: /* else_clause: ELSE statement_sequence  */
+#line 191 "src/parser.y"
+        {
+            (yyval.else_clause_val) = malloc(sizeof(else_clause_t));
+            (yyval.else_clause_val)->statement_sequence_ptr = (yyvsp[0].statement_sequence_val);
+        }
+#line 1288 "src/parser.tab.c"
+    break;
+
+  case 18: /* while_statement: WHILE expression DO statement_sequence END  */
+#line 199 "src/parser.y"
+    {
+        (yyval.while_statement_val) = malloc(sizeof(while_statement_t));
+        (yyval.while_statement_val)->expression_ptr = (yyvsp[-3].expression_val);
+        (yyval.while_statement_val)->statement_sequence_ptr = (yyvsp[-1].statement_sequence_val);
+    }
+#line 1298 "src/parser.tab.c"
+    break;
+
+  case 19: /* write_int: WRITEINT expression  */
+#line 208 "src/parser.y"
+    {
+        (yyval.write_int_val) = malloc(sizeof(expression_t));
+        (yyval.write_int_val)->expression_ptr = (yyvsp[0].expression_val);
+    }
+#line 1307 "src/parser.tab.c"
+    break;
+
+  case 20: /* expression: simple_expression  */
+#line 216 "src/parser.y"
+    {
+        (yyval.expression_val) = malloc(sizeof(simple_expression_t));
+        (yyval.expression_val)->simple_expression_one_ptr = (yyvsp[0].simple_expression_val);
+    }
+#line 1316 "src/parser.tab.c"
+    break;
+
+  case 21: /* expression: simple_expression OP4 simple_expression  */
+#line 221 "src/parser.y"
+    {
+        (yyval.expression_val) = malloc(sizeof(simple_expression_t));
+        (yyval.expression_val)->simple_expression_one_ptr = (yyvsp[-2].simple_expression_val);
+        (yyval.expression_val)->op4 = (yyvsp[-1].sval);
+        (yyval.expression_val)->simple_expression_two_ptr = (yyvsp[0].simple_expression_val);
+    }
+#line 1327 "src/parser.tab.c"
+    break;
+
+  case 22: /* simple_expression: term OP3 term  */
+#line 231 "src/parser.y"
+    {
+        (yyval.simple_expression_val) = malloc(sizeof(simple_expression_t));
+        (yyval.simple_expression_val)->term_one_ptr = (yyvsp[-2].term_val);
+        (yyval.simple_expression_val)->op3 = (yyvsp[-1].sval);
+        (yyval.simple_expression_val)->term_two_ptr = (yyvsp[0].term_val);
+    }
+#line 1338 "src/parser.tab.c"
+    break;
+
+  case 23: /* simple_expression: term  */
+#line 238 "src/parser.y"
+    {
+        (yyval.simple_expression_val) = malloc(sizeof(simple_expression_t));
+        (yyval.simple_expression_val)->term_one_ptr = (yyvsp[0].term_val);
+    }
+#line 1347 "src/parser.tab.c"
+    break;
+
+  case 24: /* term: factor OP2 factor  */
+#line 246 "src/parser.y"
+    {
+        (yyval.term_val) = malloc(sizeof(term_t));
+        (yyval.term_val)->factor_one_ptr = (yyvsp[-2].factor_val);
+        (yyval.term_val)->op2 = (yyvsp[-1].sval);
+        (yyval.term_val)->factor_two_ptr = (yyvsp[0].factor_val);
+    }
+#line 1358 "src/parser.tab.c"
+    break;
+
+  case 25: /* term: factor  */
+#line 253 "src/parser.y"
+    {
+        (yyval.term_val) = malloc(sizeof(term_t));
+        (yyval.term_val)->factor_one_ptr = (yyvsp[0].factor_val);
+    }
+#line 1367 "src/parser.tab.c"
+    break;
+
+  case 26: /* factor: IDENT  */
+#line 261 "src/parser.y"
+    {
+        (yyval.factor_val) = malloc(sizeof(factor_t));
+        (yyval.factor_val)->ident = (yyvsp[0].sval);
+    }
+#line 1376 "src/parser.tab.c"
+    break;
+
+  case 27: /* factor: NUM  */
+#line 266 "src/parser.y"
+    {
+        (yyval.factor_val) = malloc(sizeof(factor_t));
+        (yyval.factor_val)->num = (yyvsp[0].ival);
+    }
+#line 1385 "src/parser.tab.c"
+    break;
+
+  case 28: /* factor: BOOLLIT  */
+#line 271 "src/parser.y"
+    {
+        (yyval.factor_val) = malloc(sizeof(factor_t));
+        (yyval.factor_val)->boollit = (yyvsp[0].sval);
+    }
+#line 1394 "src/parser.tab.c"
+    break;
+
+  case 29: /* factor: LP expression RP  */
+#line 276 "src/parser.y"
+    {
+        (yyval.factor_val) = malloc(sizeof(factor_t));
+        (yyval.factor_val)->expression_ptr = (yyvsp[-1].expression_val);
+    }
+#line 1403 "src/parser.tab.c"
+    break;
+
+
+#line 1407 "src/parser.tab.c"
 
       default: break;
     }
@@ -1318,21 +1596,18 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 106 "src/grammar.y"
+#line 281 "src/parser.y"
 
 
 
-int yyerror(char *s) {
+int yyerror(const char *s) {
     printf("yyerror : %s\n", s);
     exit(1);
 }
 
 int main() {
     yyparse();
-    printf("SUCCESS\n");
     return 0;
 }
 
-int yywrap() {
-
-}
+int yywrap() {}

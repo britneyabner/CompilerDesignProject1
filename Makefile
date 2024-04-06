@@ -1,13 +1,13 @@
 all: compiler
 
-src/lex.yy.c: src/lexer.l src/grammar.tab.h src/grammar.tab.c
+src/lex.yy.c: src/lexer.l src/parser.tab.h src/parser.tab.c
 	flex -o src/lex.yy.c src/lexer.l
 
-src/grammar.tab.h: src/grammar.y
-	bison src/grammar.y -o src/grammar.tab.c -d
+src/parser.tab.h: src/parser.y
+	bison src/parser.y -o src/parser.tab.c -d
 
-src/grammar.tab.c: src/grammar.y
-	bison src/grammar.y -o src/grammar.tab.c
+src/parser.tab.c: src/parser.y
+	bison src/parser.y -o src/parser.tab.c
 
-compiler: src/lex.yy.c src/grammar.tab.h src/grammar.tab.c
-	gcc -o bin/compiler src/lex.yy.c src/grammar.tab.c -lfl
+compiler: src/lex.yy.c src/parser.tab.h src/parser.tab.c
+	gcc -o bin/compiler src/lex.yy.c src/parser.tab.c -lfl
