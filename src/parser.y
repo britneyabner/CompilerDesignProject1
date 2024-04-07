@@ -9,7 +9,7 @@ int yyerror(const char *);
 
 %code requires
 {
-    #include "structs.h"
+    #include "syntax_tree.h"
 }
 
 %union
@@ -82,32 +82,12 @@ program:
             $$ = malloc(sizeof(program_t));
             $$->declarations_ptr = $2;
             $$->statement_sequence_ptr = $4;
-            printf("program\n");
-            declarations_t *dec = $$->declarations_ptr;
-            while(dec != NULL) {
-                printf("\tvar %s as INT ;\n", dec->ident);
-                dec = dec->declarations_ptr;
-            }
-            printf("begin\n");
-            statement_sequence_t *sq = $$->statement_sequence_ptr;
-            while(sq != NULL) {
-                statement_t *s = sq->statement_ptr;
-                assignment_t *a = s->assignment_ptr;
-                if (a != NULL) {
-                    printf("\t%s := \n", a->ident);
-                }
-                if_statement_t *i = s->if_statement_ptr;
-                if (i != NULL) { 
-                    printf("\tif\n");
-                }
-                sq = sq->statement_sequence_ptr;
-
-            }
+            
         }
     ;
 
 declarations: 
-    /* empty */ { $$ = malloc(sizeof(declarations_t)); }
+    /* empty */ { $$ = NULL; }
     | VAR IDENT AS type SC declarations
         {
             $$ = malloc(sizeof(declarations_t));
@@ -129,7 +109,7 @@ type:
     ;
 
 statement_sequence:
-    /* empty */ { malloc(sizeof(statement_sequence_t)); }
+    /* empty */ { $$ = NULL; }
     | statement SC statement_sequence
         {
             $$ = malloc(sizeof(statement_sequence_t));
@@ -186,7 +166,7 @@ if_statement:
     ;
 
 else_clause:
-    /* empty */ { $$ = malloc(sizeof(else_clause_t)); }
+    /* empty */ { $$ = NULL; }
     | ELSE statement_sequence
         {
             $$ = malloc(sizeof(else_clause_t));

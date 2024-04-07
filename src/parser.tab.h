@@ -47,7 +47,7 @@ extern int yydebug;
 /* "%code requires" blocks.  */
 #line 11 "src/parser.y"
 
-    #include "structs.h"
+    #include "syntax_tree.h"
 
 #line 53 "src/parser.tab.h"
 
