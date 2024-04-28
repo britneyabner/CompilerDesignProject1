@@ -2,6 +2,7 @@
 #include "symboltable.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define COMPILE_FAILURE 0
 #define COMPILE_SUCCESS 1
@@ -191,7 +192,7 @@ static int print_assignemt(assignment_t *node) {
   // the printing format is different for <expression> or READINT
   // ident ASGN READINT
   if (!(node->expression_ptr)) {
-    printf("scanf(\"%%d\", %s);", node->ident);
+    printf("scanf(\"%%d\", &%s);", node->ident);
     return COMPILE_SUCCESS;
   } else if (node->expression_ptr) { // ident ASGN <expression>
     printf("%s = ", node->ident);
