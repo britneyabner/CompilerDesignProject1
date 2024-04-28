@@ -7,6 +7,11 @@
 // initializes symbol table
 static symbol_table_t *identifiers = NULL;
 
+/** Determines if a symbol exists in the symbol table.
+ *
+ * @parm name String name/key of the symbol
+ * @return 1 if found, 0 otherwise
+ */
 int find_symbol(char *name) {
   symbol_table_t *symbol = NULL;
   symbol = (symbol_table_t *)malloc(sizeof *symbol);
@@ -19,6 +24,11 @@ int find_symbol(char *name) {
   free(symbol);
 }
 
+/** Attempts to add a symbol to the symbol table
+ *
+ * @param name String name/key of the symbol
+ * @return 1 if added successfully, 0 otherwise
+ */
 int add_symbol(char *name) {
   if (find_symbol(name)) {
     // cant add duplicate symbol
