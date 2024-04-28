@@ -13,7 +13,7 @@ A Makefile is provided.
 
 ## Running
 ```bash
-./bin/compiler < `*path/to/TL13_file*`
+./bin/compiler < `*`path/to/TL13_file`*`
 ```
 
 ## Testing
