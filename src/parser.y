@@ -3,13 +3,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 int yylex(void);
 int yyerror(const char *);
 %}
 
 %code requires
 {
-    #include "syntax_tree.h"
+    #include "parsetree.h"
+    #include "symboltable.h"
+    
+    #define MIN_NUM 0
+    #define MAX_NUM 214783647
 }
 
 %union
@@ -50,6 +55,7 @@ int yyerror(const char *);
 %token WHILE
 %token DO
 %token PROGRAM
+
 %token VAR
 %token AS
 %token INT
@@ -82,7 +88,7 @@ program:
             $$ = malloc(sizeof(program_t));
             $$->declarations_ptr = $2;
             $$->statement_sequence_ptr = $4;
-            
+            compile($$);
         }
     ;
 
@@ -94,6 +100,12 @@ declarations:
             $$->ident = $2;
             $$->type_ptr = $4;
             $$->declarations_ptr = $6;
+
+            if (find_symbol($$->ident)) {
+                yyerror("Redefinition of identifier");
+            }
+
+            add_symbol($$->ident);
         }
     ;
 
@@ -101,10 +113,12 @@ type:
     INT
         {
             $$ = malloc(sizeof(type_t));
+            $$->data_type = INTEGER_TYPE;
         }
     | BOOL
         {
             $$ = malloc(sizeof(type_t));
+            $$->data_type = BOOLEAN_TYPE;
         }
     ;
 
@@ -147,11 +161,19 @@ assignment:
             $$ = malloc(sizeof(assignment_t));
             $$->ident = $1;
             $$->expression_ptr = $3;
+
+            if (!find_symbol($$->ident)) {
+                yyerror("Undeclared identifier.");
+            }
         }
     | IDENT ASGN READINT
         {
             $$ = malloc(sizeof(assignment_t));
             $$->ident = $1;
+
+            if (!find_symbol($$->ident)) {
+                yyerror("Undeclared identifier.");
+            }
         }
     ;
 
@@ -246,6 +268,10 @@ factor:
     {
         $$ = malloc(sizeof(factor_t));
         $$->num = $1;
+
+        if ($$->num < MIN_NUM || $$->num > MAX_NUM) {
+            yyerror("Literal number out of valid range.");
+        }
     }
     | BOOLLIT
     {

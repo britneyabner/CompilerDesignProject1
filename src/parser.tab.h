@@ -45,11 +45,15 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 11 "src/parser.y"
+#line 12 "src/parser.y"
 
-    #include "syntax_tree.h"
+    #include "parsetree.h"
+    #include "symboltable.h"
+    
+    #define MIN_NUM 0
+    #define MAX_NUM 214783647
 
-#line 53 "src/parser.tab.h"
+#line 57 "src/parser.tab.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -92,7 +96,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 16 "src/parser.y"
+#line 21 "src/parser.y"
 
     char *sval;
     int ival;
@@ -111,7 +115,7 @@ union YYSTYPE
     term_t *term_val;
     factor_t *factor_val;
 
-#line 115 "src/parser.tab.h"
+#line 119 "src/parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

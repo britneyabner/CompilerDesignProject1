@@ -1,6 +1,5 @@
 # TL13 Compiler
-Compiler for the TL13 programming language. In development for Compiler Design
-course.
+Compiler for the TL13 programming language written for Compiler Design Course.
 
 The program makes use of Flex and Bison to implement lexical analysis and 
 context-free grammar.
@@ -10,7 +9,12 @@ Written by: Britney Abner
 ## Make
 The project is already compiled. The program located at ```bin/compiler```.  
 <br/>
-A Makefile is provided. To make, run ```make``` within the project directory
+A Makefile is provided.
+
+## Running
+```bash
+./bin/compiler < "path/to/TL13file"
+```
 
 ## Testing
 The ```test``` directory provided 2 files for testing: ```test_success.txt```
