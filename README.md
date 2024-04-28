@@ -12,9 +12,7 @@ The project is already compiled. The program located at ```bin/compiler```.
 A Makefile is provided.
 
 ## Running
-```bash
-./bin/compiler < `*`path/to/TL13_file`*`
-```
+<pre><code>./bin/compiler < <i>path/to/TL13_file</i></code></pre>
 
 ## Testing
 The ```test``` directory provided 2 files for testing: ```test_success.txt```
