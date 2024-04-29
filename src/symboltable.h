@@ -35,6 +35,7 @@ int find_symbol(char *name);
  * @param name String name/key of the symbol
  * @return 1 if added successfully, 0 otherwise
  */
-int add_symbol(char *name, symbol_type_t type);
+int add_symbol(char *name);
+int add_type(char *name, symbol_type_t type);
 
 #endif // SYMBOLTABLE_H

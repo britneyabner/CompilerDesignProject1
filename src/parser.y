@@ -105,7 +105,8 @@ declarations:
                 yyerror("Redefinition of identifier");
             }
 
-            add_symbol($$->ident, $$->type_ptr->data_type);
+            add_symbol($$->ident);
+            add_type($$->ident, $$->type_ptr->data_type);
         }
     ;
 

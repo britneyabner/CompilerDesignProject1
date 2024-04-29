@@ -100,101 +100,7 @@ int yyerror(const char *);
 #  endif
 # endif
 
-
-/* Debug traces.  */
-#ifndef YYDEBUG
-# define YYDEBUG 1
-#endif
-#if YYDEBUG
-extern int yydebug;
-#endif
-/* "%code requires" blocks.  */
-#line 12 "src/parser.y"
-
-    #include "parsetree.h"
-    #include "symboltable.h"
-    
-    #define MIN_NUM 0
-    #define MAX_NUM 214783647
-
-#line 121 "src/parser.tab.c"
-
-/* Token kinds.  */
-#ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-  enum yytokentype
-  {
-    YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
-    NUM = 258,                     /* NUM  */
-    BOOLLIT = 259,                 /* BOOLLIT  */
-    IDENT = 260,                   /* IDENT  */
-    LP = 261,                      /* LP  */
-    RP = 262,                      /* RP  */
-    ASGN = 263,                    /* ASGN  */
-    SC = 264,                      /* SC  */
-    OP2 = 265,                     /* OP2  */
-    OP3 = 266,                     /* OP3  */
-    OP4 = 267,                     /* OP4  */
-    IF = 268,                      /* IF  */
-    THEN = 269,                    /* THEN  */
-    ELSE = 270,                    /* ELSE  */
-    BEGIN_T = 271,                 /* BEGIN_T  */
-    END = 272,                     /* END  */
-    WHILE = 273,                   /* WHILE  */
-    DO = 274,                      /* DO  */
-    PROGRAM = 275,                 /* PROGRAM  */
-    VAR = 276,                     /* VAR  */
-    AS = 277,                      /* AS  */
-    INT = 278,                     /* INT  */
-    BOOL = 279,                    /* BOOL  */
-    WRITEINT = 280,                /* WRITEINT  */
-    READINT = 281                  /* READINT  */
-  };
-  typedef enum yytokentype yytoken_kind_t;
-#endif
-
-/* Value type.  */
-#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
-{
-#line 21 "src/parser.y"
-
-    char *sval;
-    int ival;
-    program_t *program_val;
-    declarations_t *declarations_val;
-    type_t  *type_val;
-    statement_sequence_t *statement_sequence_val;
-    statement_t *statement_val;
-    assignment_t *assigment_val;
-    if_statement_t *if_statement_val;
-    else_clause_t *else_clause_val;
-    while_statement_t *while_statement_val;
-    write_int_t *write_int_val;
-    expression_t *expression_val;
-    simple_expression_t *simple_expression_val;
-    term_t *term_val;
-    factor_t *factor_val;
-
-#line 183 "src/parser.tab.c"
-
-};
-typedef union YYSTYPE YYSTYPE;
-# define YYSTYPE_IS_TRIVIAL 1
-# define YYSTYPE_IS_DECLARED 1
-#endif
-
-
-extern YYSTYPE yylval;
-
-
-int yyparse (void);
-
-
-
+#include "parser.tab.h"
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -629,9 +535,9 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    86,    86,    96,    97,   113,   118,   126,   127,   136,
-     141,   146,   151,   159,   169,   181,   191,   192,   200,   209,
-     217,   222,   232,   239,   247,   254,   262,   267,   276,   281
+       0,    86,    86,    96,    97,   114,   119,   127,   128,   137,
+     142,   147,   152,   160,   170,   182,   192,   193,   201,   210,
+     218,   223,   233,   240,   248,   255,   263,   268,   277,   282
 };
 #endif
 
@@ -1229,13 +1135,13 @@ yyreduce:
             (yyval.program_val)->statement_sequence_ptr = (yyvsp[-1].statement_sequence_val);
             compile((yyval.program_val));
         }
-#line 1233 "src/parser.tab.c"
+#line 1139 "src/parser.tab.c"
     break;
 
   case 3: /* declarations: %empty  */
 #line 96 "src/parser.y"
                 { (yyval.declarations_val) = NULL; }
-#line 1239 "src/parser.tab.c"
+#line 1145 "src/parser.tab.c"
     break;
 
   case 4: /* declarations: VAR IDENT AS type SC declarations  */
@@ -1250,83 +1156,84 @@ yyreduce:
                 yyerror("Redefinition of identifier");
             }
 
-            add_symbol((yyval.declarations_val)->ident, (yyval.declarations_val)->type_ptr->data_type);
+            add_symbol((yyval.declarations_val)->ident);
+            add_type((yyval.declarations_val)->ident, (yyval.declarations_val)->type_ptr->data_type);
         }
-#line 1256 "src/parser.tab.c"
+#line 1163 "src/parser.tab.c"
     break;
 
   case 5: /* type: INT  */
-#line 114 "src/parser.y"
+#line 115 "src/parser.y"
         {
             (yyval.type_val) = malloc(sizeof(type_t));
             (yyval.type_val)->data_type = INTEGER_TYPE;
         }
-#line 1265 "src/parser.tab.c"
+#line 1172 "src/parser.tab.c"
     break;
 
   case 6: /* type: BOOL  */
-#line 119 "src/parser.y"
+#line 120 "src/parser.y"
         {
             (yyval.type_val) = malloc(sizeof(type_t));
             (yyval.type_val)->data_type = BOOLEAN_TYPE;
         }
-#line 1274 "src/parser.tab.c"
+#line 1181 "src/parser.tab.c"
     break;
 
   case 7: /* statement_sequence: %empty  */
-#line 126 "src/parser.y"
+#line 127 "src/parser.y"
                 { (yyval.statement_sequence_val) = NULL; }
-#line 1280 "src/parser.tab.c"
+#line 1187 "src/parser.tab.c"
     break;
 
   case 8: /* statement_sequence: statement SC statement_sequence  */
-#line 128 "src/parser.y"
+#line 129 "src/parser.y"
         {
             (yyval.statement_sequence_val) = malloc(sizeof(statement_sequence_t));
             (yyval.statement_sequence_val)->statement_ptr = (yyvsp[-2].statement_val);
             (yyval.statement_sequence_val)->statement_sequence_ptr = (yyvsp[0].statement_sequence_val);
         }
-#line 1290 "src/parser.tab.c"
+#line 1197 "src/parser.tab.c"
     break;
 
   case 9: /* statement: assignment  */
-#line 137 "src/parser.y"
+#line 138 "src/parser.y"
         {
             (yyval.statement_val) = malloc(sizeof(statement_t));
             (yyval.statement_val)->assignment_ptr = (yyvsp[0].assigment_val);
         }
-#line 1299 "src/parser.tab.c"
+#line 1206 "src/parser.tab.c"
     break;
 
   case 10: /* statement: if_statement  */
-#line 142 "src/parser.y"
+#line 143 "src/parser.y"
         {
             (yyval.statement_val) = malloc(sizeof(statement_t));
             (yyval.statement_val)->if_statement_ptr = (yyvsp[0].if_statement_val);
         }
-#line 1308 "src/parser.tab.c"
+#line 1215 "src/parser.tab.c"
     break;
 
   case 11: /* statement: while_statement  */
-#line 147 "src/parser.y"
+#line 148 "src/parser.y"
         {
             (yyval.statement_val) = malloc(sizeof(statement_t));
             (yyval.statement_val)->while_statement_ptr = (yyvsp[0].while_statement_val);
         }
-#line 1317 "src/parser.tab.c"
+#line 1224 "src/parser.tab.c"
     break;
 
   case 12: /* statement: write_int  */
-#line 152 "src/parser.y"
+#line 153 "src/parser.y"
         {
             (yyval.statement_val) = malloc(sizeof(statement_t));
             (yyval.statement_val)->write_int_ptr = (yyvsp[0].write_int_val);
         }
-#line 1326 "src/parser.tab.c"
+#line 1233 "src/parser.tab.c"
     break;
 
   case 13: /* assignment: IDENT ASGN expression  */
-#line 160 "src/parser.y"
+#line 161 "src/parser.y"
         {
             (yyval.assigment_val) = malloc(sizeof(assignment_t));
             (yyval.assigment_val)->ident = (yyvsp[-2].sval);
@@ -1336,11 +1243,11 @@ yyreduce:
                 yyerror("Undeclared identifier.");
             }
         }
-#line 1340 "src/parser.tab.c"
+#line 1247 "src/parser.tab.c"
     break;
 
   case 14: /* assignment: IDENT ASGN READINT  */
-#line 170 "src/parser.y"
+#line 171 "src/parser.y"
         {
             (yyval.assigment_val) = malloc(sizeof(assignment_t));
             (yyval.assigment_val)->ident = (yyvsp[-2].sval);
@@ -1349,125 +1256,125 @@ yyreduce:
                 yyerror("Undeclared identifier.");
             }
         }
-#line 1353 "src/parser.tab.c"
+#line 1260 "src/parser.tab.c"
     break;
 
   case 15: /* if_statement: IF expression THEN statement_sequence else_clause END  */
-#line 182 "src/parser.y"
+#line 183 "src/parser.y"
         {
             (yyval.if_statement_val) = malloc(sizeof(if_statement_t));
             (yyval.if_statement_val)->expression_ptr = (yyvsp[-4].expression_val);
             (yyval.if_statement_val)->statement_sequence_ptr = (yyvsp[-2].statement_sequence_val);
             (yyval.if_statement_val)->else_clause_ptr = (yyvsp[-1].else_clause_val);
         }
-#line 1364 "src/parser.tab.c"
+#line 1271 "src/parser.tab.c"
     break;
 
   case 16: /* else_clause: %empty  */
-#line 191 "src/parser.y"
+#line 192 "src/parser.y"
                 { (yyval.else_clause_val) = NULL; }
-#line 1370 "src/parser.tab.c"
+#line 1277 "src/parser.tab.c"
     break;
 
   case 17: /* else_clause: ELSE statement_sequence  */
-#line 193 "src/parser.y"
+#line 194 "src/parser.y"
         {
             (yyval.else_clause_val) = malloc(sizeof(else_clause_t));
             (yyval.else_clause_val)->statement_sequence_ptr = (yyvsp[0].statement_sequence_val);
         }
-#line 1379 "src/parser.tab.c"
+#line 1286 "src/parser.tab.c"
     break;
 
   case 18: /* while_statement: WHILE expression DO statement_sequence END  */
-#line 201 "src/parser.y"
+#line 202 "src/parser.y"
     {
         (yyval.while_statement_val) = malloc(sizeof(while_statement_t));
         (yyval.while_statement_val)->expression_ptr = (yyvsp[-3].expression_val);
         (yyval.while_statement_val)->statement_sequence_ptr = (yyvsp[-1].statement_sequence_val);
     }
-#line 1389 "src/parser.tab.c"
+#line 1296 "src/parser.tab.c"
     break;
 
   case 19: /* write_int: WRITEINT expression  */
-#line 210 "src/parser.y"
+#line 211 "src/parser.y"
     {
         (yyval.write_int_val) = malloc(sizeof(expression_t));
         (yyval.write_int_val)->expression_ptr = (yyvsp[0].expression_val);
     }
-#line 1398 "src/parser.tab.c"
+#line 1305 "src/parser.tab.c"
     break;
 
   case 20: /* expression: simple_expression  */
-#line 218 "src/parser.y"
+#line 219 "src/parser.y"
     {
         (yyval.expression_val) = malloc(sizeof(simple_expression_t));
         (yyval.expression_val)->simple_expression_one_ptr = (yyvsp[0].simple_expression_val);
     }
-#line 1407 "src/parser.tab.c"
+#line 1314 "src/parser.tab.c"
     break;
 
   case 21: /* expression: simple_expression OP4 simple_expression  */
-#line 223 "src/parser.y"
+#line 224 "src/parser.y"
     {
         (yyval.expression_val) = malloc(sizeof(simple_expression_t));
         (yyval.expression_val)->simple_expression_one_ptr = (yyvsp[-2].simple_expression_val);
         (yyval.expression_val)->op4 = (yyvsp[-1].sval);
         (yyval.expression_val)->simple_expression_two_ptr = (yyvsp[0].simple_expression_val);
     }
-#line 1418 "src/parser.tab.c"
+#line 1325 "src/parser.tab.c"
     break;
 
   case 22: /* simple_expression: term OP3 term  */
-#line 233 "src/parser.y"
+#line 234 "src/parser.y"
     {
         (yyval.simple_expression_val) = malloc(sizeof(simple_expression_t));
         (yyval.simple_expression_val)->term_one_ptr = (yyvsp[-2].term_val);
         (yyval.simple_expression_val)->op3 = (yyvsp[-1].sval);
         (yyval.simple_expression_val)->term_two_ptr = (yyvsp[0].term_val);
     }
-#line 1429 "src/parser.tab.c"
+#line 1336 "src/parser.tab.c"
     break;
 
   case 23: /* simple_expression: term  */
-#line 240 "src/parser.y"
+#line 241 "src/parser.y"
     {
         (yyval.simple_expression_val) = malloc(sizeof(simple_expression_t));
         (yyval.simple_expression_val)->term_one_ptr = (yyvsp[0].term_val);
     }
-#line 1438 "src/parser.tab.c"
+#line 1345 "src/parser.tab.c"
     break;
 
   case 24: /* term: factor OP2 factor  */
-#line 248 "src/parser.y"
+#line 249 "src/parser.y"
     {
         (yyval.term_val) = malloc(sizeof(term_t));
         (yyval.term_val)->factor_one_ptr = (yyvsp[-2].factor_val);
         (yyval.term_val)->op2 = (yyvsp[-1].sval);
         (yyval.term_val)->factor_two_ptr = (yyvsp[0].factor_val);
     }
-#line 1449 "src/parser.tab.c"
+#line 1356 "src/parser.tab.c"
     break;
 
   case 25: /* term: factor  */
-#line 255 "src/parser.y"
+#line 256 "src/parser.y"
     {
         (yyval.term_val) = malloc(sizeof(term_t));
         (yyval.term_val)->factor_one_ptr = (yyvsp[0].factor_val);
     }
-#line 1458 "src/parser.tab.c"
+#line 1365 "src/parser.tab.c"
     break;
 
   case 26: /* factor: IDENT  */
-#line 263 "src/parser.y"
+#line 264 "src/parser.y"
     {
         (yyval.factor_val) = malloc(sizeof(factor_t));
         (yyval.factor_val)->ident = (yyvsp[0].sval);
     }
-#line 1467 "src/parser.tab.c"
+#line 1374 "src/parser.tab.c"
     break;
 
   case 27: /* factor: NUM  */
-#line 268 "src/parser.y"
+#line 269 "src/parser.y"
     {
         (yyval.factor_val) = malloc(sizeof(factor_t));
         (yyval.factor_val)->num = (yyvsp[0].ival);
@@ -1476,29 +1383,29 @@ yyreduce:
             yyerror("Literal number out of valid range.");
         }
     }
-#line 1480 "src/parser.tab.c"
+#line 1387 "src/parser.tab.c"
     break;
 
   case 28: /* factor: BOOLLIT  */
-#line 277 "src/parser.y"
+#line 278 "src/parser.y"
     {
         (yyval.factor_val) = malloc(sizeof(factor_t));
         (yyval.factor_val)->boollit = (yyvsp[0].sval);
     }
-#line 1489 "src/parser.tab.c"
+#line 1396 "src/parser.tab.c"
     break;
 
   case 29: /* factor: LP expression RP  */
-#line 282 "src/parser.y"
+#line 283 "src/parser.y"
     {
         (yyval.factor_val) = malloc(sizeof(factor_t));
         (yyval.factor_val)->expression_ptr = (yyvsp[-1].expression_val);
     }
-#line 1498 "src/parser.tab.c"
+#line 1405 "src/parser.tab.c"
     break;
 
 
-#line 1502 "src/parser.tab.c"
+#line 1409 "src/parser.tab.c"
 
       default: break;
     }
@@ -1691,7 +1598,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 287 "src/parser.y"
+#line 288 "src/parser.y"
 
 
 

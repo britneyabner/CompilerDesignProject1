@@ -1,5 +1,6 @@
 %{
 #include "parser.tab.h"
+#include "symboltable.h"
 %}
 
 %%
