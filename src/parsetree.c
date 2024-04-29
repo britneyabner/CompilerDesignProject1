@@ -95,8 +95,16 @@ static int print_declarations(declarations_t *node) {
     return COMPILE_FAILURE;
   }
 
-  // variables default to 0/false
-  printf("%s = 0;\n", node->ident);
+  switch (node->type_ptr->data_type) {
+  case INTEGER_TYPE:
+    printf("%s = 0;\n", node->ident);
+    break;
+  case BOOLEAN_TYPE:
+    printf("%s = false;\n", node->ident);
+    break;
+  default:
+    return COMPILE_FAILURE;
+  }
 
   // <declarations_t>
   return print_declarations(node->declarations_ptr);
@@ -120,6 +128,8 @@ static int print_type(type_t *node) {
   case BOOLEAN_TYPE:
     printf("bool ");
     break;
+  default:
+    return COMPILE_FAILURE;
   }
 
   return COMPILE_SUCCESS;

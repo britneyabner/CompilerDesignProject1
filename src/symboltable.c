@@ -29,7 +29,7 @@ int find_symbol(char *name) {
  * @param name String name/key of the symbol
  * @return 1 if added successfully, 0 otherwise
  */
-int add_symbol(char *name) {
+int add_symbol(char *name, symbol_type_t type) {
   if (find_symbol(name)) {
     // cant add duplicate symbol
     return 0;
@@ -38,6 +38,7 @@ int add_symbol(char *name) {
   symbol_table_t *symbol = NULL;
   symbol = (symbol_table_t *)malloc(sizeof *symbol);
   symbol->name = strdup(name);
+  symbol->type = type;
   HASH_ADD_KEYPTR(hh, identifiers, symbol->name, strlen(symbol->name), symbol);
 
   return 1;

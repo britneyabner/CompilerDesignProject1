@@ -1,6 +1,5 @@
 %{
 #include "parser.tab.h"
-#include "symboltable.h"
 %}
 
 %%
@@ -53,7 +52,7 @@ false|true {
 "bool"                        return(BOOL);
 "writeInt"                    return(WRITEINT);
 "readInt"                     return(READINT);
-[ \n\r]                       // ignore whitespace
+[ \n\r\t]+                    // ignore whitespace
 "%".*\n                       // ignore comment
-.                             { perror("Unknown token."); }
+.                             { perror("Unknown token"); }
 %%
